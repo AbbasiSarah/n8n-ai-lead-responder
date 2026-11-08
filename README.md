@@ -2,6 +2,8 @@
 
 **Every enquiry gets a fast, accurate reply, every lead is saved, and the owner only handles the hot ones.**
 
+▶ [Watch the 46-second demo](https://abbasisarah.github.io/assets/videos/demo-n8n-ai-lead-responder.mp4)
+
 ![workflow](assets/workflow-diagram.png)
 
 Small businesses lose customers because enquiries wait hours for an answer. This **n8n** workflow answers them in seconds:
