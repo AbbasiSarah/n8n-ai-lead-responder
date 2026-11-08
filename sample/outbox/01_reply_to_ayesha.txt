@@ -1,0 +1,8 @@
+To: ayesha@example.com
+Subject: Thanks for contacting Sunrise Tech Academy
+
+Hi Ayesha Khan,
+
+Thank you for contacting Sunrise Tech Academy! Python for Beginners is Rs 15,000, Data Science and Web Development are Rs 25,000 each, and Machine Learning is Rs 35,000. You can pay in 2 instalments. New batches start on the 1st of every month. You can apply with the online form and pay the first instalment.
+
+The Sunrise Tech Academy team
