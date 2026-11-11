@@ -24,7 +24,7 @@ nodes = [
      "parameters": {"assignments": {"assignments": [
          {"id": "s1", "name": "business", "value": "Sunrise Tech Academy", "type": "string"},
          {"id": "s2", "name": "owner_email", "value": "you@example.com", "type": "string"},
-         {"id": "s3", "name": "model", "value": "claude-haiku-5-5", "type": "string"},
+         {"id": "s3", "name": "model", "value": "your-model-name", "type": "string"},
          {"id": "s4", "name": "facts", "type": "string", "value":
           "Courses: Python for Beginners (Rs 15,000, 6 weeks), Data Science (Rs 25,000, 10 weeks), Machine Learning (Rs 35,000, 12 weeks), "
           "Web Development (Rs 25,000, 10 weeks). Fees can be paid in 2 instalments. Weekday classes 6-8 pm Mon-Thu, weekend classes Sat 10 am-2 pm. "
@@ -86,7 +86,7 @@ return [{ json: {
     {"id": "n9", "name": "Read me first", "type": "n8n-nodes-base.stickyNote", "typeVersion": 1, "position": [-40, -40],
      "parameters": {"width": 620, "height": 260, "content":
         "## AI Lead Responder\nBuilt by Sara Abbasi · SheCodesAI\n\n1. **Settings**: change the business name, your email and the facts.\n"
-        "2. **Ask AI**: add a *Header Auth* credential: name `x-api-key`, value = your Anthropic API key.\n"
+        "2. **Ask AI**: add a *Header Auth* credential: name `x-api-key`, value = your AI provider's API key. Then set `model` in Settings.\n"
         "3. **Save lead to Sheet**: connect Google, paste your Sheet URL. The sheet tab `Leads` needs the headers: date, name, email, course, message, category, priority, reply\n"
         "4. **Reply / Alert**: connect Gmail.\n5. Open the form URL from **Enquiry form** and test!"}},
 ]

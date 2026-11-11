@@ -9,7 +9,7 @@
 Small businesses lose customers because enquiries wait hours for an answer. This **n8n** workflow answers them in seconds:
 
 1. A customer fills in the **enquiry form** (name, email, course, message).
-2. **AI (Claude)** reads it, **sorts it** (Fees, Admission, Timings, Complaint…), marks it **high or normal priority**, and **writes a short, friendly reply**, using **only the business's real facts**. If the answer isn't in the facts, it says the team will reply personally. It never makes up prices or dates.
+2. **AI** reads it, **sorts it** (Fees, Admission, Timings, Complaint…), marks it **high or normal priority**, and **writes a short, friendly reply**, using **only the business's real facts**. If the answer isn't in the facts, it says the team will reply personally. It never makes up prices or dates.
 3. The lead is **saved to Google Sheets**.
 4. The reply is **emailed to the customer** through Gmail.
 5. **Hot leads** (ready to join, or upset) **alert the owner** straight away.
@@ -32,12 +32,12 @@ Usman Tariq     Complaint    high    🔥 owner alerted     "not happy… I want
 Hira Shah       Course info  normal                       "Can I study online from Lahore?"
 Omar Farooq     Other        normal                       "Do you offer Java?" → team replies personally
 ```
-*(Made with `simulate.py` in offline mode, where simple keyword rules stand in for the AI. With an API key, Claude does this step and writes more natural replies.)*
+*(Made with `simulate.py` in offline mode, where simple keyword rules stand in for the AI. With an API key, a real AI model does this step and writes more natural replies.)*
 
 ## Set it up in n8n (about 15 minutes)
 1. In n8n: **Workflows → Import from file** → choose `workflow.json`.
 2. **Settings** node: change the business name, your email (`owner_email`) and the **facts** the AI may use.
-3. **Ask AI** node → Credential → **Header Auth**: Name `x-api-key`, Value = your Anthropic API key.
+3. **Ask AI** node → Credential → **Header Auth**: Name `x-api-key`, Value = your AI provider's API key. In the **Settings** node, set `model` to the model name from your provider.
 4. Create a Google Sheet with a tab called **Leads** and these headers in row 1:
    `date, name, email, course, message, category, priority, reply`
    Then, in the **Save lead to Sheet** node, connect your Google account and paste the Sheet URL.
@@ -47,7 +47,7 @@ Omar Farooq     Other        normal                       "Do you offer Java?" �
 ## Run the Python version
 ```bash
 python simulate.py                    # offline demo, no API key needed
-ANTHROPIC_API_KEY=sk-... python simulate.py   # real AI replies
+AI_API_KEY=... AI_MODEL=<model-name> python simulate.py   # real AI replies
 python -m pytest                      # 4 tests
 ```
 
@@ -55,7 +55,7 @@ python -m pytest                      # 4 tests
 - Use **WhatsApp, Telegram or Slack** instead of email for the owner alert
 - Add the lead to a **CRM** (HubSpot, Airtable, Notion)
 - Use a website **chat widget** or **Facebook/Instagram messages** instead of the form
-- Use OpenAI or another model instead of Claude: only the **Ask AI** node changes
+- Switch to another AI provider (e.g. OpenAI): only the **Ask AI** node changes
 
 *Sunrise Tech Academy is a fictional demo business; all names and emails in the samples are made up.*
 

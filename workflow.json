@@ -85,7 +85,7 @@
             {
               "id": "s3",
               "name": "model",
-              "value": "claude-haiku-5-5",
+              "value": "your-model-name",
               "type": "string"
             },
             {
@@ -338,7 +338,7 @@
       "parameters": {
         "width": 620,
         "height": 260,
-        "content": "## AI Lead Responder\nBuilt by Sara Abbasi · SheCodesAI\n\n1. **Settings**: change the business name, your email and the facts.\n2. **Ask AI**: add a *Header Auth* credential: name `x-api-key`, value = your Anthropic API key.\n3. **Save lead to Sheet**: connect Google, paste your Sheet URL. The sheet tab `Leads` needs the headers: date, name, email, course, message, category, priority, reply\n4. **Reply / Alert**: connect Gmail.\n5. Open the form URL from **Enquiry form** and test!"
+        "content": "## AI Lead Responder\nBuilt by Sara Abbasi · SheCodesAI\n\n1. **Settings**: change the business name, your email and the facts.\n2. **Ask AI**: add a *Header Auth* credential: name `x-api-key`, value = your AI provider's API key. Then set `model` in Settings.\n3. **Save lead to Sheet**: connect Google, paste your Sheet URL. The sheet tab `Leads` needs the headers: date, name, email, course, message, category, priority, reply\n4. **Reply / Alert**: connect Gmail.\n5. Open the form URL from **Enquiry form** and test!"
       }
     }
   ],

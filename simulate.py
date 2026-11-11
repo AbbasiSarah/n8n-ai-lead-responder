@@ -3,7 +3,7 @@
 form enquiry -> AI writes a reply and sorts it -> save to leads.csv -> "send" the email -> alert the owner for hot leads
 
 Two modes:
-  * Real AI:  set ANTHROPIC_API_KEY and it calls Claude, like the n8n workflow does.
+  * Real AI:  set AI_API_KEY and AI_MODEL and it calls the AI model, like the n8n workflow does.
   * Offline:  with no key, a simple keyword version stands in for the AI, so you can
               see the whole flow work for free. (It is clearly labelled as offline.)
 
@@ -31,14 +31,14 @@ SYSTEM = json.loads((HERE / "workflow.json").read_text())  # reuse the exact pro
 SYSTEM = [n for n in SYSTEM["nodes"] if n["name"] == "Ask AI"][0]["parameters"]["jsonBody"]
 
 
-def ask_claude(name, course, message):
+def ask_ai(name, course, message):
     """Same request the n8n 'Ask AI' node sends."""
     prompt = SYSTEM.split('system: "')[1].split('".replaceAll')[0].encode().decode("unicode_escape")
     prompt = prompt.replace("{business}", BUSINESS).replace("{facts}", " ".join(FACTS.values()))
-    body = {"model": os.environ.get("MODEL", "claude-haiku-5-5"), "max_tokens": 600, "system": prompt,
+    body = {"model": os.environ["AI_MODEL"], "max_tokens": 600, "system": prompt,
             "messages": [{"role": "user", "content": f"Name: {name}\nCourse: {course}\nMessage: {message}"}]}
     req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=json.dumps(body).encode(),
-                                 headers={"x-api-key": os.environ["ANTHROPIC_API_KEY"], "anthropic-version": "2023-06-01",
+                                 headers={"x-api-key": os.environ["AI_API_KEY"], "anthropic-version": "2023-06-01",
                                           "content-type": "application/json"})
     with urllib.request.urlopen(req, timeout=60) as r:
         return json.load(r)["content"][0]["text"]
@@ -72,15 +72,15 @@ def read_ai_answer(text, name):
 
 
 def main():
-    use_api = bool(os.environ.get("ANTHROPIC_API_KEY"))
-    print(f"AI mode: {'Claude API' if use_api else 'OFFLINE demo (no API key)'}\n")
+    use_api = bool(os.environ.get("AI_API_KEY"))
+    print(f"AI mode: {'AI API' if use_api else 'OFFLINE demo (no API key)'}\n")
     out, outbox = HERE / "sample" / "leads.csv", HERE / "sample" / "outbox"
     outbox.mkdir(parents=True, exist_ok=True)
     with open(HERE / "sample" / "enquiries.csv", encoding="utf-8") as f:
         enquiries = list(csv.DictReader(f))
     rows = []
     for i, e in enumerate(enquiries, 1):
-        text = ask_claude(e["Name"], e["Course"], e["Message"]) if use_api else offline_ai(e["Name"], e["Course"], e["Message"])
+        text = ask_ai(e["Name"], e["Course"], e["Message"]) if use_api else offline_ai(e["Name"], e["Course"], e["Message"])
         ai = read_ai_answer(text, e["Name"])
         row = {"date": datetime.now().strftime("%Y-%m-%d %H:%M"), "name": e["Name"], "email": e["Email"], "course": e["Course"],
                "message": e["Message"], "category": ai["category"], "priority": ai["priority"], "reply": ai["reply"]}
